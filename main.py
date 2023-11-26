@@ -19,7 +19,7 @@ def draw(canvas):
     with open('animation/rocket_frame_2.txt', 'r') as r2:
         frame2 = r2.read()
 
-    y_max, x_max = curses.window.getmaxyx(canvas)
+    y_max, x_max = canvas.getmaxyx()
     coroutines = [
         blink(canvas, random.randint(1, y_max - 2), random.randint(1, x_max - 2), random.choice('+*.:'))
         for _ in range(STARS_QUANTITY)
