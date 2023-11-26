@@ -1,7 +1,7 @@
 import random
 import time
 import curses
-from _curses import curs_set
+
 from animation.fire_animation import fire
 from animation.spaceship_animation import animate_spaceship
 from animation.stars_animation import blink
@@ -11,21 +11,22 @@ STARS_QUANTITY = 120
 
 
 def draw(canvas):
-    curs_set(False)
+    canvas.border()
+    curses.curs_set(False)
     canvas.nodelay(True)
     with open('animation/rocket_frame_1.txt', 'r') as r1:
         frame1 = r1.read()
     with open('animation/rocket_frame_2.txt', 'r') as r2:
         frame2 = r2.read()
-    canvas.border()
-    curses.curs_set(False)
+
     y_max, x_max = curses.window.getmaxyx(canvas)
     coroutines = [
         blink(canvas, random.randint(1, y_max - 2), random.randint(1, x_max - 2), random.choice('+*.:'))
         for _ in range(STARS_QUANTITY)
     ]
-    coroutines.append(fire(canvas, y_max/2, x_max/2))
-    coroutines.append(animate_spaceship(canvas, y_max/2, x_max/2, frame1, frame2))
+
+    coroutines.append(fire(canvas, y_max//2, x_max//2))
+    coroutines.append(animate_spaceship(canvas, frame1, frame2))
     while True:
         for coroutine in coroutines:
             try:
