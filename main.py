@@ -7,7 +7,7 @@ from animation.spaceship_animation import animate_spaceship
 from animation.stars_animation import blink
 
 TIC_TIMEOUT = 0.1
-STARS_QUANTITY = 20
+STARS_QUANTITY = 50
 
 
 def draw(canvas):
@@ -21,7 +21,13 @@ def draw(canvas):
 
     y_max, x_max = canvas.getmaxyx()
     coroutines = [
-        blink(canvas, random.randint(1, y_max - 2), random.randint(1, x_max - 2), random.choice('+*.:'))
+        blink(
+            canvas,
+            random.randint(1, y_max - 2),
+            random.randint(1, x_max - 2),
+            random.randint(1, 10),
+            random.choice('+*.:')
+        )
         for _ in range(STARS_QUANTITY)
     ]
 

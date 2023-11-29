@@ -1,9 +1,8 @@
 import asyncio
 import curses
-import random
 
 
-async def blink(canvas, row, column, symbol='*'):
+async def blink(canvas, row, column, offset_tics, symbol='*'):
     while True:
         canvas.addstr(row, column, symbol, curses.A_DIM)
         for _ in range(7):
@@ -18,5 +17,5 @@ async def blink(canvas, row, column, symbol='*'):
             await asyncio.sleep(0)
 
         canvas.addstr(row, column, symbol)
-        for _ in range(random.randint(1, 10)):
+        for _ in range(offset_tics):
             await asyncio.sleep(0)
