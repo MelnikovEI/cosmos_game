@@ -8,6 +8,7 @@ from animation.stars_animation import blink
 
 TIC_TIMEOUT = 0.1
 STARS_QUANTITY = 50
+BORDER_WIDTH = 1
 
 
 def draw(canvas):
@@ -19,20 +20,20 @@ def draw(canvas):
     with open('animation/rocket_frame_2.txt', 'r') as r2:
         frame2 = r2.read()
 
-    y_max, x_max = canvas.getmaxyx()
+    window_height, window_width = canvas.getmaxyx()
     coroutines = [
         blink(
             canvas,
-            random.randint(1, y_max - 2),
-            random.randint(1, x_max - 2),
+            random.randint(BORDER_WIDTH, window_height - BORDER_WIDTH - 1),
+            random.randint(BORDER_WIDTH, window_width - BORDER_WIDTH - 1),
             random.randint(1, 10),
             random.choice('+*.:')
         )
         for _ in range(STARS_QUANTITY)
     ]
 
-    coroutines.append(fire(canvas, y_max//2, x_max//2))
-    coroutines.append(animate_spaceship(canvas, frame1, frame2))
+    coroutines.append(fire(canvas, window_height//2, window_width//2))
+    coroutines.append(animate_spaceship(canvas, frame1, frame2, 0))
     while True:
         for coroutine in coroutines.copy():
             try:
