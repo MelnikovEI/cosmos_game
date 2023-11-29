@@ -7,7 +7,7 @@ from animation.spaceship_animation import animate_spaceship
 from animation.stars_animation import blink
 
 TIC_TIMEOUT = 0.1
-STARS_QUANTITY = 120
+STARS_QUANTITY = 20
 
 
 def draw(canvas):
@@ -28,7 +28,7 @@ def draw(canvas):
     coroutines.append(fire(canvas, y_max//2, x_max//2))
     coroutines.append(animate_spaceship(canvas, frame1, frame2))
     while True:
-        for coroutine in coroutines:
+        for coroutine in coroutines.copy():
             try:
                 coroutine.send(None)
             except StopIteration:
