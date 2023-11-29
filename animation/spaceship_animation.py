@@ -5,7 +5,7 @@ from animation.curses_tools import draw_frame, read_controls, get_frame_size
 
 
 async def animate_spaceship(canvas, frame1, frame2):
-    spaceship_frames = cycle([frame1, frame2])
+    spaceship_frames = cycle([frame1, frame1, frame2, frame2])
 
     window_height, window_width = canvas.getmaxyx()
     # https://docs.python.org/2/library/curses.html#curses.window.getmaxyx
@@ -14,8 +14,7 @@ async def animate_spaceship(canvas, frame1, frame2):
     col = window_width // 2 - frame_max_col // 2
     border = 0
 
-    while True:
-        spaceship_frame = next(spaceship_frames)
+    for spaceship_frame in spaceship_frames:
         rows_direction, columns_direction, space_pressed = read_controls(canvas)
         new_row = row + rows_direction
         new_col = col + columns_direction
